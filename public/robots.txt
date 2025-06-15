@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://bebaby.app
+
+# Sitemaps
+Sitemap: https://bebaby.app/sitemap.xml
