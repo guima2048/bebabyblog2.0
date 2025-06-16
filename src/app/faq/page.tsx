@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Head from 'next/head';
 
 interface Faq {
-  id: number;
+  id: string;
   pergunta: string;
   resposta: string;
 }
@@ -12,6 +12,7 @@ interface Faq {
 export default function FaqPage() {
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/faq")
@@ -40,22 +41,34 @@ export default function FaqPage() {
           }))
         }) }} />
       </Head>
-      <section className="max-w-2xl mx-auto p-6">
-        <h1 className="text-3xl font-bold text-[#6b21a8] mb-8 text-center">Perguntas Frequentes</h1>
-        {loading ? (
-          <div className="text-center text-[#6b21a8]">Carregando FAQs...</div>
-        ) : faqs.length === 0 ? (
-          <div className="text-center text-[#6b21a8]">Nenhuma FAQ cadastrada ainda.</div>
-        ) : (
-          <ul className="space-y-6">
-            {faqs.map((faq) => (
-              <li key={faq.id} className="bg-white rounded-xl shadow p-6 border border-[#c4b5fd]">
-                <div className="font-semibold text-lg text-[#6b21a8] mb-2">{faq.pergunta}</div>
-                <div className="text-gray-700 leading-relaxed">{faq.resposta}</div>
-              </li>
-            ))}
-          </ul>
-        )}
+      <section className="max-w-3xl mx-auto p-4">
+        <div className="border rounded-xl bg-white">
+          <h1 className="text-2xl md:text-3xl font-bold p-6 pb-2">Perguntas Frequentes</h1>
+          {loading ? (
+            <div className="text-center text-[#6b21a8] p-6">Carregando FAQs...</div>
+          ) : faqs.length === 0 ? (
+            <div className="text-center text-[#6b21a8] p-6">Nenhuma FAQ cadastrada ainda.</div>
+          ) : (
+            <ul>
+              {faqs.map((faq, idx) => (
+                <li key={faq.id} className="border-t first:border-t-0 border-black">
+                  <button
+                    className="w-full text-left p-5 font-semibold flex justify-between items-center focus:outline-none"
+                    onClick={() => setOpen(open === idx ? null : idx)}
+                    aria-expanded={open === idx}
+                    aria-controls={`faq-publico-${faq.id}`}
+                  >
+                    <span>{faq.pergunta}</span>
+                    <span className="text-2xl font-bold">{open === idx ? "−" : "+"}</span>
+                  </button>
+                  {open === idx && (
+                    <div id={`faq-publico-${faq.id}`} className="p-5 pt-0 text-gray-800 border-t border-black">{faq.resposta}</div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </section>
     </>
   );

@@ -1,9 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Oswald } from "next/font/google";
 import { siteSEO } from '@/config/seo';
+import FooterRedes from "@/components/FooterRedes";
+import MenuHamburguer from "@/components/MenuHamburguer";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 const inter = Inter({ subsets: ["latin"] });
+const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] });
 
 export const metadata: Metadata = {
   title: "Bebaby Blog",
@@ -14,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt">
       <head>
+        <link rel="icon" type="image/png" href="/favicon.png" />
         {siteSEO.googleVerification && (
           <meta name="google-site-verification" content={siteSEO.googleVerification} />
         )}
@@ -35,20 +40,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }}
           />
         )}
+        <meta name="robots" content="noindex, nofollow" />
       </head>
       <body className={inter.className + " bg-[#e9d8fd] min-h-screen flex flex-col"}>
         <header className="sticky top-0 z-50 bg-white shadow-sm p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <button className="text-2xl">≡</button>
-            <span className="font-bold text-lg">Bebaby</span>
+            <MenuHamburguer />
+            <span className={oswald.className + " font-bold text-lg text-[#6b21a8]"}>Bebaby</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="/join" className="bg-violet-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-violet-700 transition-colors">Cadastre-se</a>
-            <a href="/login" className="text-sm underline hover:text-violet-600 transition-colors">Entrar</a>
+            <a href="https://bebaby.app" className="bg-[#210d41] text-white px-4 py-2 rounded-xl text-sm hover:bg-[#15082a] transition-colors">Cadastre-se</a>
+            <a href="https://bebaby.app" className="text-sm underline hover:text-[#210d41] transition-colors">Entrar</a>
           </div>
         </header>
 
-        <main className="flex-grow container mx-auto px-4 py-8">
+        <main className="flex-grow">
           {children}
         </main>
 
@@ -59,17 +65,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/privacidade" className="hover:text-violet-600 transition-colors">Políticas de Privacidade</a>
               <a href="/termos" className="hover:text-violet-600 transition-colors">Termos de Uso</a>
               <a href="/conduta" className="hover:text-violet-600 transition-colors">Código de Conduta</a>
-              <a href="/seguranca" className="hover:text-violet-600 transition-colors">Segurança da Plataforma</a>
               <a href="/faq" className="hover:text-violet-600 transition-colors">FAQ Bebaby</a>
               <a href="/contato" className="hover:text-violet-600 transition-colors">Suporte e Contato</a>
             </div>
-            <div className="flex gap-4">
-              <a href="#" aria-label="Instagram" className="hover:text-violet-600 transition-colors">📸</a>
-              <a href="#" aria-label="TikTok" className="hover:text-violet-600 transition-colors">🎵</a>
-              <a href="#" aria-label="X" className="hover:text-violet-600 transition-colors">✖</a>
-            </div>
+            <FooterRedes />
           </div>
         </footer>
+        <ScrollToTopButton />
       </body>
     </html>
   );

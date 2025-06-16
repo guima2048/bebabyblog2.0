@@ -27,6 +27,18 @@ export async function POST(req: NextRequest) {
       `,
     });
 
+    // Adiciona notificação para o admin
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/notificacoes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tipo: 'contato',
+        titulo: 'Novo contato recebido',
+        descricao: `De: ${nome} (${email}) — Assunto: ${assunto}`,
+        mensagem,
+      }),
+    });
+
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: 'Erro ao enviar e-mail' }, { status: 500 });

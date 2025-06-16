@@ -11,6 +11,8 @@ type Post = {
   content: string;
   image: string;
   status: "ativo" | "rascunho";
+  faqs?: { question: string; answer: string }[];
+  data?: string;
 };
 
 export async function GET(req: NextRequest) {
@@ -35,6 +37,10 @@ export async function POST(req: NextRequest) {
   const exists = posts.find((p: Post) => p.slug === newPost.slug);
   if (exists) {
     return NextResponse.json({ error: "Slug já existe" }, { status: 400 });
+  }
+
+  if (!newPost.data) {
+    newPost.data = new Date().toISOString();
   }
 
   posts.push(newPost);

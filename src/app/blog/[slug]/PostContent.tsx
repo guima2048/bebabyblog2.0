@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import ReactMarkdown from "react-markdown";
+import CommentForm from '@/components/CommentForm';
+import CommentsList from '@/components/CommentsList';
 
 interface Post {
   slug: string;
@@ -15,6 +16,32 @@ interface Post {
   categoria?: string;
   autor?: string;
   data?: string;
+  faqs?: { question: string, answer: string }[];
+  createdAt?: string;
+}
+
+function FAQAccordion({ faqs }: { faqs: { question: string, answer: string }[] }) {
+  const [open, setOpen] = useState<number | null>(null);
+  if (!faqs || faqs.length === 0) return null;
+  return (
+    <div className="border rounded mt-10">
+      <h2 className="text-xl font-bold mb-4 p-4">Perguntas Frequentes</h2>
+      {faqs.map((faq, idx) => (
+        <div key={idx} className="border-b">
+          <button
+            className="w-full text-left p-4 font-semibold flex justify-between items-center"
+            onClick={() => setOpen(open === idx ? null : idx)}
+          >
+            <span>{faq.question}</span>
+            <span>{open === idx ? "−" : "+"}</span>
+          </button>
+          {open === idx && (
+            <div className="p-4 pt-0 text-gray-700">{faq.answer}</div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default function PostContent({ slug }: { slug: string }) {
@@ -54,13 +81,18 @@ export default function PostContent({ slug }: { slug: string }) {
     <article className="min-h-screen bg-[#e9d8fd] py-16 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg border border-[#c4b5fd] p-8">
         <h1 className="text-4xl font-serif font-bold text-[#6b21a8] mb-4">{post.title}</h1>
+        {(post.createdAt || post.data) && (
+          <div className="text-sm text-gray-500 mb-4 flex items-center gap-2">
+            <span>Publicado em {post.createdAt ? new Date(post.createdAt).toLocaleDateString('pt-BR') : (post.data ? new Date(post.data).toLocaleDateString('pt-BR') : null)}</span>
+            <span>•</span>
+            <span className="font-bold text-gray-700">Talita Rangel</span>
+          </div>
+        )}
         
         <div className="flex items-center gap-4 text-sm text-[#6b21a8] mb-6">
           {post.categoria && (
             <span className="bg-[#ede3fa] px-3 py-1 rounded-full">{post.categoria}</span>
           )}
-          {post.autor && <span>Por {post.autor}</span>}
-          {post.data && <span>{new Date(post.data).toLocaleDateString()}</span>}
         </div>
 
         <Image 
@@ -73,10 +105,13 @@ export default function PostContent({ slug }: { slug: string }) {
 
         <div className="prose prose-purple max-w-none">
           <p className="text-lg text-[#6b21a8] mb-6">{post.description}</p>
-          <div className="text-gray-800 leading-relaxed">
-            <ReactMarkdown>{post.content}</ReactMarkdown>
-          </div>
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
+
+        {post.faqs && post.faqs.length > 0 && <FAQAccordion faqs={post.faqs} />}
+
+        <CommentForm slug={post.slug} />
+        <CommentsList slug={post.slug} />
 
         <div className="mt-12 pt-6 border-t border-[#c4b5fd]">
           <Link 
