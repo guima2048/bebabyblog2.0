@@ -40,7 +40,7 @@ export default function Home() {
       {/* HERO */}
       <div className="flex flex-col items-center mb-16">
         <h1 className={oswald.className + " text-5xl md:text-6xl font-bold text-white mb-2 tracking-tight"}>Bebaby Blog</h1>
-        <p className="text-lg md:text-xl text-white mb-8 font-light">Tudo sobre Relacionamento Sugar</p>
+        <p className="text-lg md:text-xl text-white mb-8 font-light">Testando edição via Cursor</p>
         <Image src="/uploads/Site de relacionamento sugar.jpg" alt="Mulher elegante" width={320} height={400} className="w-64 md:w-80 rounded-2xl mb-6 shadow-lg object-cover -mt-8" />
         <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-white text-lg font-bold mb-2">
