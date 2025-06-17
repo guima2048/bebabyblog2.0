@@ -1,4 +1,4 @@
-import posts from "@/data/posts.json";
+import rawPosts from "@/data/posts.json";
 
 export type Post = {
   slug: string;
@@ -18,6 +18,9 @@ type PostJson = {
   status: string;
 };
 
+// Forçar o tipo do import
+const posts = rawPosts as PostJson[];
+
 function normalizePost(post: PostJson): Post {
   return {
     ...post,
@@ -32,4 +35,4 @@ export function getAllPosts(): Post[] {
 export function getPostBySlug(slug: string): Post | undefined {
   const post = posts.find((post) => post.slug === slug);
   return post ? normalizePost(post) : undefined;
-} 
+}
