@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] });
 
 export const metadata: Metadata = {
-  title: "Bebaby Blog",
+  title: "Blog para Sugar Babies e Sugar Daddies | Bebaby",
   description: "Empoderamento, estilo e liberdade no universo sugar.",
 };
 
