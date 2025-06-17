@@ -33,6 +33,6 @@ export function getAllPosts(): Post[] {
 }
 
 export function getPostBySlug(slug: string): Post | undefined {
-  const post = posts.find((post) => post.slug === slug);
+  const post = posts.find((post: PostJson) => post.slug === slug);
   return post ? normalizePost(post) : undefined;
 }
