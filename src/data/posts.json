@@ -1,29 +1,11 @@
 [
   {
-      {
-        "question": "Qual o perfil ideal de uma sugar baby?",
-        "answer": "Não existe padrão único. O que mais atrai sugar daddys é atitude, autenticidade e leveza. Ser direta e saber o que quer conta mais que qualquer selfie no espelho."
-      },
-      {
-        "question": "Preciso pagar algo para me cadastrar como sugar baby?",
-        "answer": "Na maioria dos sites, como a BeBaby, o cadastro para sugar babys é gratuito. Algumas funções extras são pagas, mas o essencial costuma ser liberado."
-      },
-      {
-        "question": "Quantas fotos devo colocar no meu perfil?",
-        "answer": "Entre 3 e 6 fotos é o ideal. Mostre sua personalidade: uma de rosto, uma sorrindo, uma em ambiente mais elegante. Nunca use filtros exagerados ou fotos de 10 anos atrás."
-      },
-      {
-        "question": "Vale a pena conversar com mais de um sugar daddy ao mesmo tempo?",
-        "answer": "Sim, desde que você seja sincera. O universo sugar é aberto e baseado em escolhas. Até encontrar uma boa conexão, testar possibilidades é natural."
-      },
-      {
-        "question": "Como dizer o que quero sem parecer interesseira?",
-        "answer": "Use sua bio com inteligência: seja clara, confiante e elegante. Fale sobre seus objetivos, seu estilo de vida e o que valoriza em um relacionamento — sem parecer exigente nem submissa."
-      },
-      {
-        "question": "Posso ser sugar baby mesmo morando em cidade pequena?",
-        "answer": "Claro! Muitos sugar daddys buscam conexão emocional antes da distância. E com o online, tudo começa com uma boa conversa — e a possibilidade de viajar é um atrativo a mais."
-      }
-    ]
+    "slug": "site-de-sugar-baby",
+    "title": "Site de Sugar Baby: Descubra o melhor site sugar para você",
+    "description": "O Site de Sugar Baby mais falado do momento é a Bebaby site de relacionamento Sugar. Conheça Sugar Daddy de todo o Brasil e perto de você.",
+    "content": "Conteúdo completo do post aqui...",
+    "image": "/uploads/exemplo.jpg",
+    "status": "ativo",
+    "data": "2024-06-17T12:00:00.000Z"
   }
 ]
