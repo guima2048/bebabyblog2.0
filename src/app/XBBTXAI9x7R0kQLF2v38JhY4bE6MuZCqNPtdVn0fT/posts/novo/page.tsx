@@ -204,14 +204,6 @@ export default function NovoPost() {
               </button>
             </div>
           )}
-          <input
-            type="text"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="URL da imagem (ex: /uploads/xyz.webp)"
-            className="w-full border p-2 rounded"
-            required
-          />
         </div>
         <div>
           <label className="block mb-2 text-sm text-gray-700">FAQ do post</label>
