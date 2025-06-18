@@ -93,9 +93,6 @@ export default function NovoPost() {
       }
       setImageUrl(data.url);
       toast.success('Imagem enviada com sucesso!');
-      // Prompt para texto alternativo
-      const alt = prompt('Digite o texto alternativo da imagem:') || '';
-      editor?.chain().focus().setImage({ src: data.url, alt }).run();
     } catch (error) {
       setUploadError(error instanceof Error ? error.message : 'Erro ao fazer upload');
       toast.error('Erro ao fazer upload da imagem');

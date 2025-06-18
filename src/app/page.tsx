@@ -59,7 +59,9 @@ export default function Home() {
         ) : (
           postsAtivos.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:scale-[1.02] transition-transform border border-gray-200">
-              <Image src={post.image} alt={post.title} width={600} height={320} className="w-full h-56 object-contain rounded-t-2xl bg-black" />
+              {post.image && (
+                <Image src={post.image} alt={post.title} width={600} height={320} className="w-full h-56 object-contain rounded-t-2xl bg-black" />
+              )}
               <div className="p-6 flex flex-col flex-1">
                 <h2 className="text-2xl font-bold mb-3 text-gray-900" style={{fontFamily: oswald.style.fontFamily}}>{post.title}</h2>
                 <p className="text-base text-gray-700 mb-6 flex-1">{post.description}</p>
