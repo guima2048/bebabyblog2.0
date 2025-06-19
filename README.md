@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bebaby Blog 2.0
 
-## Getting Started
+Este é um projeto [Next.js](https://nextjs.org) para o blog Bebaby sobre relacionamentos Sugar.
 
-First, run the development server:
+## Como Iniciar
+
+Primeiro, execute o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
+# ou
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Você pode começar a editar a página modificando `app/page.tsx`. A página atualiza automaticamente conforme você edita o arquivo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy em Produção
 
-## Learn More
+### Deploy Manual no Servidor
 
-To learn more about Next.js, take a look at the following resources:
+Para fazer deploy no servidor de produção:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# No servidor de produção
+npm run deploy
+# ou
+bash deploy.sh
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+O script de deploy irá:
+- Puxar as últimas alterações do GitHub
+- Instalar dependências
+- Fazer build de produção
+- Reiniciar a aplicação com PM2
 
-## Deploy on Vercel
+### Configuração do Servidor
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+O projeto está configurado para rodar em: `http://177.153.20.125:3000`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Scripts Disponíveis
+
+- `npm run dev` - Servidor de desenvolvimento
+- `npm run build` - Build de produção
+- `npm run start` - Iniciar servidor de produção
+- `npm run deploy` - Deploy completo no servidor
+- `npm run lint` - Verificar código
+- `npm run type-check` - Verificar tipos TypeScript
+
+## Tecnologias
+
+- Next.js 15
+- React 19
+- TypeScript
+- Tailwind CSS
+- PM2 (Process Manager)
