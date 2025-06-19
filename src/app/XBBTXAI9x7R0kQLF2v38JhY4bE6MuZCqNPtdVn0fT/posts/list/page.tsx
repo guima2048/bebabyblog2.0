@@ -80,9 +80,9 @@ export default function ListaPosts() {
   };
 
   return (
-    <section className="max-w-4xl mx-auto p-6">
+    <div className="flex-1 p-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Posts</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Posts</h1>
         <div className="flex gap-2">
           <button
             onClick={fetchPosts}
@@ -173,6 +173,6 @@ export default function ListaPosts() {
           ))}
         </div>
       )}
-    </section>
+    </div>
   );
 } 
