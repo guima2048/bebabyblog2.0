@@ -17,7 +17,7 @@ export default function MenuHamburguer() {
             onClick={() => setMenuOpen(false)}
           />
           {/* Drawer lateral esquerdo */}
-          <aside className="fixed top-0 left-0 h-full w-72 bg-[#0a101a] z-50 flex flex-col p-8 shadow-2xl">
+          <aside className="fixed top-0 left-0 h-full w-72 bg-[#210d41] z-50 flex flex-col p-8 shadow-2xl">
             <button className="text-3xl text-white self-end mb-8" onClick={() => setMenuOpen(false)}>&times;</button>
             <nav className="flex flex-col gap-7 text-white text-lg" style={{fontFamily: oswald.style.fontFamily}}>
               <Link href="/" onClick={() => setMenuOpen(false)}>Início</Link>

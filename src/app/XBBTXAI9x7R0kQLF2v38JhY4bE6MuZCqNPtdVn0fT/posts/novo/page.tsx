@@ -29,6 +29,7 @@ export default function NovoPost() {
   const [faqAnswer, setFaqAnswer] = useState("");
   const [slugDuplicado, setSlugDuplicado] = useState(false);
   const [slugSugestao, setSlugSugestao] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const editor = useEditor({
     extensions: [
@@ -63,6 +64,9 @@ export default function NovoPost() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
     const post = {
       slug,
       title,
@@ -72,17 +76,23 @@ export default function NovoPost() {
       status,
       faqs,
     };
-    const res = await fetch("/api/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(post),
-    });
-    if (res.ok) {
-      toast.success("Post criado com sucesso!");
-      router.push("/XBBTXAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/posts/list");
-    } else {
-      const data = await res.json();
-      toast.error("Erro: " + data.error);
+    try {
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(post),
+      });
+      if (res.ok) {
+        toast.success("Post criado com sucesso!");
+        router.replace("/XBBTXAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/posts/list");
+      } else {
+        const data = await res.json();
+        toast.error("Erro: " + data.error);
+      }
+    } catch (error) {
+      toast.error("Erro ao criar post");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -143,6 +153,7 @@ export default function NovoPost() {
           placeholder="Slug (ex: como-pedir-mimos)"
           className={`w-full border p-2 rounded ${slugDuplicado ? 'border-red-500' : ''}`}
           required
+          disabled={isSubmitting}
         />
         {slugDuplicado && (
           <div className="text-red-600 text-sm mb-2">Slug já existe! Sugestão: <span className="font-bold">{slugSugestao}</span></div>
@@ -264,12 +275,12 @@ export default function NovoPost() {
           <option value="ativo">Ativo</option>
           <option value="rascunho">Rascunho</option>
         </select>
-        <button
-          type="submit"
-          className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded font-semibold shadow text-center"
-          disabled={slugDuplicado}
+        <button 
+          type="submit" 
+          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors w-full disabled:opacity-50"
+          disabled={isSubmitting || slugDuplicado}
         >
-          Salvar
+          {isSubmitting ? "Salvando..." : "Salvar Post"}
         </button>
       </form>
     </section>

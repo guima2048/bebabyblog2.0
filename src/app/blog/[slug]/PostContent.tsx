@@ -90,13 +90,15 @@ export default function PostContent({ slug }: { slug: string }) {
             <span className="bg-[#ede3fa] px-3 py-1 rounded-full">{post.categoria}</span>
           )}
         </div>
-        <Image 
-          src={post.image} 
-          alt={post.title} 
-          width={800} 
-          height={400} 
-          className="w-full rounded-xl mb-8 shadow-md object-cover" 
-        />
+        {post.image && post.image.trim() !== "" && (
+          <Image 
+            src={post.image} 
+            alt={post.title} 
+            width={800} 
+            height={400} 
+            className="w-full rounded-xl mb-8 shadow-md object-cover" 
+          />
+        )}
 
         <div className="prose prose-purple max-w-none">
           <p className="text-lg text-[#6b21a8] mb-6">{post.description}</p>

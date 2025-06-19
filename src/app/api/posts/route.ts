@@ -15,18 +15,72 @@ type Post = {
   data?: string;
 };
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const slug = searchParams.get("slug");
-  const data = await fs.readFile(filePath, "utf-8");
-  const posts: Post[] = JSON.parse(data);
+export async function GET(request: NextRequest) {
+  try {
+    // Verifica se há um slug na query
+    const { searchParams } = new URL(request.url);
+    const slug = searchParams.get('slug');
+    
+    // Caminho absoluto para o arquivo
+    const filePath = path.join(process.cwd(), "src/data/posts.json");
+    
+    // Verifica se o arquivo existe
+    try {
+      await fs.access(filePath);
+    } catch (error) {
+      console.error('Arquivo não encontrado:', filePath);
+      return NextResponse.json({ error: 'Arquivo de posts não encontrado' }, { status: 404 });
+    }
 
-  if (slug) {
-    const post = posts.find((p) => p.slug === slug);
-    return NextResponse.json(post || null);
+    // Lê o arquivo
+    const fileContent = await fs.readFile(filePath, 'utf-8');
+    
+    // Tenta fazer o parse do JSON
+    let posts;
+    try {
+      posts = JSON.parse(fileContent);
+    } catch (error) {
+      console.error('Erro ao fazer parse do JSON:', error);
+      return NextResponse.json({ error: 'Erro ao processar dados dos posts' }, { status: 500 });
+    }
+
+    // Verifica se é um array
+    if (!Array.isArray(posts)) {
+      console.error('Dados não são um array:', typeof posts);
+      return NextResponse.json({ error: 'Formato de dados inválido' }, { status: 500 });
+    }
+
+    // Se há um slug, retorna apenas o post específico
+    if (slug) {
+      const post = posts.find((p: Post) => p.slug === slug);
+      if (!post) {
+        return NextResponse.json({ error: 'Post não encontrado' }, { status: 404 });
+      }
+      return new NextResponse(JSON.stringify(post), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+        },
+      });
+    }
+
+    // Retorna todos os posts com headers CORS
+    return new NextResponse(JSON.stringify(posts), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
+  } catch (error) {
+    console.error('Erro geral na API:', error);
+    return NextResponse.json({ error: 'Erro interno do servidor' }, { status: 500 });
   }
-
-  return NextResponse.json(posts);
 }
 
 export async function POST(req: NextRequest) {
