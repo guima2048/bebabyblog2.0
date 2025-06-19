@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
 import { siteSEO } from '@/config/seo';
 import FooterRedes from "@/components/FooterRedes";
-import MenuHamburguer from "@/components/MenuHamburguer";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -45,7 +44,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className + " bg-[#e9d8fd] min-h-screen flex flex-col"}>
         <header className="sticky top-0 z-50 bg-white shadow-sm p-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <MenuHamburguer />
             <span className={oswald.className + " font-bold text-lg text-[#6b21a8]"}>Bebaby</span>
           </div>
           <div className="flex items-center gap-4">
