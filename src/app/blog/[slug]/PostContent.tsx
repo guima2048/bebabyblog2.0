@@ -81,20 +81,15 @@ export default function PostContent({ slug }: { slug: string }) {
     <article className="min-h-screen bg-[#e9d8fd] py-16 px-4">
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg border border-[#c4b5fd] p-8">
         <h1 className="text-4xl font-serif font-bold text-[#6b21a8] mb-4">{post.title}</h1>
-        {(post.createdAt || post.data) && (
-          <div className="text-sm text-gray-500 mb-4 flex items-center gap-2">
-            <span>Publicado em {post.createdAt ? new Date(post.createdAt).toLocaleDateString('pt-BR') : (post.data ? new Date(post.data).toLocaleDateString('pt-BR') : null)}</span>
-            <span>•</span>
-            <span className="font-bold text-gray-700">Talita Rangel</span>
-          </div>
-        )}
-        
+        <div className="flex items-center justify-between gap-2 text-sm text-gray-500 mb-4">
+          <span>Publicado em {post.data ? new Date(post.data).toLocaleDateString('pt-BR') : (post.createdAt ? new Date(post.createdAt).toLocaleDateString('pt-BR') : null)}</span>
+          <span className="font-bold text-gray-700">{post.autor || 'Talita Rangel'}</span>
+        </div>
         <div className="flex items-center gap-4 text-sm text-[#6b21a8] mb-6">
           {post.categoria && (
             <span className="bg-[#ede3fa] px-3 py-1 rounded-full">{post.categoria}</span>
           )}
         </div>
-
         <Image 
           src={post.image} 
           alt={post.title} 

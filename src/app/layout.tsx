@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
 import { siteSEO } from '@/config/seo';
 import FooterRedes from "@/components/FooterRedes";
-import MenuHamburguer from "@/components/MenuHamburguer";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import MenuHamburguer from "@/components/MenuHamburguer";
 
 const inter = Inter({ subsets: ["latin"] });
 const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] });

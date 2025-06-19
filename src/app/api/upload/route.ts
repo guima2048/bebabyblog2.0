@@ -76,10 +76,12 @@ export async function POST(req: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Gera nome único com timestamp e hash
+    // Gera nome único com timestamp e hash, usando o nome original sem espaços
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(7);
-    const fileName = `${timestamp}-${random}.webp`;
+    const originalName = (file.name || 'imagem').replace(/\s+/g, '-');
+    const baseName = originalName.split('.').slice(0, -1).join('.') || 'imagem';
+    const fileName = `${timestamp}-${random}-${baseName}.webp`;
     const filePath = path.join(UPLOAD_DIR, fileName);
 
     try {

@@ -44,7 +44,12 @@ export default function ListaPosts() {
 
   return (
     <section className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Posts Publicados</h1>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
+        <h1 className="text-2xl font-bold">Posts Publicados</h1>
+        <Link href="/XBBTXAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/posts/novo" className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded font-semibold shadow text-center">
+          + Adicionar Post
+        </Link>
+      </div>
       {loading ? (
         <div className="text-center text-[#6b21a8]">Carregando posts...</div>
       ) : (

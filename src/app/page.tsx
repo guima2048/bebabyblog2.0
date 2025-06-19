@@ -41,7 +41,7 @@ export default function Home() {
       <div className="flex flex-col items-center mb-16">
         <h1 className={oswald.className + " text-5xl md:text-6xl font-bold text-white mb-2 tracking-tight"}>Bebaby Blog</h1>
         <p className="text-lg md:text-xl text-white mb-8 font-light">Tudo sobre Relacionamento Sugar</p>
-        <Image src="/uploads/Site de relacionamento sugar.jpg" alt="Mulher elegante" width={320} height={400} className="w-64 md:w-80 rounded-2xl mb-6 shadow-lg object-cover -mt-8" />
+        <Image src="/uploads/site-de-relacionamento-sugar.webp" alt="Mulher elegante" width={320} height={400} className="w-64 md:w-80 rounded-2xl mb-6 shadow-lg object-cover -mt-8" />
         <div className="text-center max-w-2xl mx-auto mb-12">
           <p className="text-white text-lg font-bold mb-2">
             Descubra histórias, dicas e segredos do universo Sugar e do patrocínio moderno.
@@ -65,10 +65,9 @@ export default function Home() {
               <div className="p-6 flex flex-col flex-1">
                 <h2 className="text-2xl font-bold mb-3 text-gray-900" style={{fontFamily: oswald.style.fontFamily}}>{post.title}</h2>
                 <p className="text-base text-gray-700 mb-6 flex-1">{post.description}</p>
-                <div className="flex items-center gap-2 text-sm text-gray-500 mt-auto">
+                <div className="flex items-center justify-between gap-2 text-sm text-gray-500 mt-auto">
+                  <span>{post.data ? new Date(post.data).toLocaleDateString('pt-BR') : (post.createdAt ? new Date(post.createdAt).toLocaleDateString('pt-BR') : null)}</span>
                   <span className="font-bold text-gray-700">Talita Rangel</span>
-                  <span>•</span>
-                  <span>{post.createdAt ? new Date(post.createdAt).toLocaleDateString('pt-BR') : (post.data ? new Date(post.data).toLocaleDateString('pt-BR') : null)}</span>
                 </div>
               </div>
             </Link>

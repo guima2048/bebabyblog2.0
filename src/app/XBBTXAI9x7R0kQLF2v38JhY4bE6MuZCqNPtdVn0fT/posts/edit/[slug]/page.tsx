@@ -102,6 +102,7 @@ export default function EditPostPage() {
       image: imageUrl,
       status,
       faqs,
+      data: postData?.data
     };
     const res = await fetch("/api/posts", {
       method: "PUT",

@@ -20,6 +20,7 @@ const slug =
   const [imagePreview, setImagePreview] = useState('');
   const [status, setStatus] = useState<'ativo' | 'rascunho'>('ativo');
   const [loading, setLoading] = useState(true);
+  const [faqs, setFaqs] = useState<{ question: string, answer: string }[]>([]);
 
   useEffect(() => {
     if (!slug) return;
@@ -32,6 +33,7 @@ const slug =
           setContent(post.content || '');
           setImagePreview(post.image || '');
           setStatus(post.status || 'ativo');
+          setFaqs(post.faqs || []);
         }
         setLoading(false);
       });
@@ -54,6 +56,7 @@ const slug =
       content,
       image: imagePreview,
       status,
+      faqs,
     };
 
     const res = await fetch("/api/posts", {

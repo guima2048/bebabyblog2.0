@@ -3,6 +3,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Inter } from "next/font/google";
 import { ReactNode } from "react";
+import FooterRedes from "@/components/FooterRedes";
+import ScrollToTopButton from "@/components/ScrollToTopButton";
+import NotificacoesSino from "@/components/NotificacoesSino";
 const inter = Inter({ subsets: ["latin"] });
 
 function LogoutButton() {
@@ -23,11 +26,20 @@ function LogoutButton() {
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <body className={inter.className + " bg-[#e9d8fd]"}>
-      <div className="w-full flex justify-end p-4">
+    <div className={inter.className + " bg-[#e9d8fd] min-h-screen flex flex-col"}>
+      <div className="w-full flex justify-end items-center gap-4 p-4">
+        <NotificacoesSino />
         <LogoutButton />
       </div>
-      {children}
-    </body>
+      <main className="flex-grow">
+        {children}
+      </main>
+      <footer className="bg-gray-100 text-sm p-6 mt-auto">
+        <div className="container mx-auto">
+          {/* <FooterRedes /> Removido para evitar duplicidade */}
+        </div>
+      </footer>
+      <ScrollToTopButton />
+    </div>
   );
 }

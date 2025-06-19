@@ -32,12 +32,17 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const newPost = await req.json();
   const data = await fs.readFile(filePath, "utf-8");
-  const posts = JSON.parse(data);
+  let posts = JSON.parse(data);
 
-  const exists = posts.find((p: Post) => p.slug === newPost.slug);
-  if (exists) {
-    return NextResponse.json({ error: "Slug já existe" }, { status: 400 });
+  // Garante slug único
+  let baseSlug = newPost.slug;
+  let slug = baseSlug;
+  let count = 2;
+  while (posts.some((p: Post) => p.slug === slug)) {
+    slug = `${baseSlug}-${count}`;
+    count++;
   }
+  newPost.slug = slug;
 
   if (!newPost.data) {
     newPost.data = new Date().toISOString();
@@ -45,7 +50,7 @@ export async function POST(req: NextRequest) {
 
   posts.push(newPost);
   await fs.writeFile(filePath, JSON.stringify(posts, null, 2));
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, slug });
 }
 
 export async function PUT(req: NextRequest) {

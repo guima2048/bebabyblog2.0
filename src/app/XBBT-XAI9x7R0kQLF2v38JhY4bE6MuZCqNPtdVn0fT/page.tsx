@@ -15,6 +15,15 @@ export default function AdminHome() {
         <Link href="/XBBT-XAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/login" className="bg-gray-200 hover:bg-gray-300 text-violet-700 py-3 px-6 rounded text-center font-semibold shadow">
           Sair / Login
         </Link>
+        <Link href="/XBBT-XAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/comments" className="bg-violet-600 hover:bg-violet-700 text-white py-3 px-6 rounded text-center font-semibold shadow">
+          Moderação de Comentários
+        </Link>
+        <Link href="/XBBT-XAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/redes" className="bg-violet-600 hover:bg-violet-700 text-white py-3 px-6 rounded text-center font-semibold shadow">
+          Editar URLs das Redes
+        </Link>
+        <Link href="/XBBT-XAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/faq" className="bg-violet-600 hover:bg-violet-700 text-white py-3 px-6 rounded text-center font-semibold shadow">
+          Adicionar/Editar FAQ do Rodapé
+        </Link>
       </nav>
     </section>
   );

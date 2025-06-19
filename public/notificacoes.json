@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1",
+    "tipo": "teste",
+    "titulo": "Notificação de Teste",
+    "descricao": "Esta é uma notificação de teste",
+    "mensagem": "Mensagem de teste para verificar o funcionamento do sistema de notificações",
+    "lida": true,
+    "data": "2024-03-18T12:00:00.000Z"
+  }
+]
