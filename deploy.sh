@@ -31,7 +31,8 @@ npm run build
 
 echo -e "${YELLOW}Reiniciando aplicação com PM2...${NC}"
 pm2 delete bebabyblog || true
-pm2 start npm --name "bebabyblog" --cwd "$(pwd)" -- start
+pm2 start npm --name "bebabyblog" -- start
+
 pm2 save
 
 echo -e "${GREEN}Deploy finalizado com sucesso!${NC}"

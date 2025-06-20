@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "npx next dev",
     "build": "npx next build",
-    "start": "npx next start",
+    "start": "node .next/standalone/server.js",
     "postbuild": "npx next-sitemap",
     "lint": "npx next lint",
     "update-sitemap": "npx sitemap-generator-cli http://localhost:3000 --filepath ./public/sitemap.xml --stripQuerystring",
