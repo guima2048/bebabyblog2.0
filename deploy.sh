@@ -16,6 +16,7 @@ fi
 
 echo -e "${YELLOW}Atualizando código do GitHub...${NC}"
 git pull
+git submodule update --init --recursive
 
 echo -e "${YELLOW}Limpando cache do npm...${NC}"
 npm cache clean --force
