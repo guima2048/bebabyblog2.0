@@ -17,34 +17,10 @@ export const config = {
 
 export const runtime = 'nodejs';
 
-// Função auxiliar para verificar permissões
-async function checkPermissions() {
-  try {
-    // Tenta criar o diretório se não existir
-    await fs.mkdir(UPLOAD_DIR, { recursive: true });
-    
-    // Tenta criar um arquivo de teste
-    const testFile = path.join(UPLOAD_DIR, '.test');
-    await fs.writeFile(testFile, 'test');
-    await fs.unlink(testFile);
-    
-    return true;
-  } catch (error) {
-    console.error('Erro ao verificar permissões:', error);
-    return false;
-  }
-}
-
 export async function POST(req: NextRequest) {
   try {
-    // Verifica permissões primeiro
-    const hasPermissions = await checkPermissions();
-    if (!hasPermissions) {
-      return NextResponse.json(
-        { error: 'Erro de permissão: O servidor não tem permissão para escrever arquivos' },
-        { status: 500 }
-      );
-    }
+    // Garante que o diretório de upload exista
+    await fs.mkdir(UPLOAD_DIR, { recursive: true });
 
     const formData = await req.formData();
     const file = formData.get('file');
@@ -103,7 +79,14 @@ export async function POST(req: NextRequest) {
         }
       });
     } catch (error) {
-      console.error('Erro ao processar imagem:', error);
+      console.error('Erro ao processar ou salvar imagem:', error);
+      // Verifica se é um erro de permissão
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'EACCES') {
+         return NextResponse.json(
+          { error: 'Erro de permissão no servidor. A aplicação não pode escrever no diretório de uploads.' },
+          { status: 500 }
+        );
+      }
       return NextResponse.json(
         { error: 'Erro ao processar a imagem. Verifique se o arquivo é uma imagem válida.' },
         { status: 500 }
