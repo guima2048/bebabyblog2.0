@@ -23,10 +23,13 @@ interface Post {
 
 const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] });
 
+const POSTS_PER_PAGE = 6;
+
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     console.log("Iniciando carregamento dos posts...");
@@ -42,7 +45,13 @@ export default function Home() {
       })
       .then((data) => {
         console.log("Dados recebidos:", data);
-        setPosts(data);
+        // Ordena os posts aqui, do mais novo para o mais antigo
+        const sortedPosts = data.sort((a: Post, b: Post) => {
+          const dateA = new Date(a.data || a.createdAt || '').getTime();
+          const dateB = new Date(b.data || b.createdAt || '').getTime();
+          return dateB - dateA; // Ordem decrescente
+        });
+        setPosts(sortedPosts);
         setLoading(false);
       })
       .catch((err) => {
@@ -52,16 +61,15 @@ export default function Home() {
       });
   }, []);
 
-  // Mostra só posts ativos
-  const postsAtivos = posts
-    .filter((post) => post.status === "ativo")
-    .sort((a, b) => {
-      const dateA = new Date(a.data || a.createdAt || '');
-      const dateB = new Date(b.data || b.createdAt || '');
-      return dateA.getTime() - dateB.getTime(); // ordem crescente (mais antigos primeiro)
-    });
+  // Filtra posts ativos e calcula a paginação
+  const postsAtivos = posts.filter((post) => post.status === "ativo");
+  const totalPages = Math.ceil(postsAtivos.length / POSTS_PER_PAGE);
+  const postsDaPagina = postsAtivos.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  );
 
-  console.log("Posts ativos:", postsAtivos);
+  console.log("Posts ativos:", postsDaPagina);
 
   if (loading) {
     return (
@@ -107,10 +115,10 @@ export default function Home() {
 
       {/* GRID DE POSTS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 -mt-16">
-        {postsAtivos.length === 0 ? (
+        {postsDaPagina.length === 0 ? (
           <div className="col-span-full text-center text-white text-lg">Nenhum post cadastrado ainda.</div>
         ) : (
-          postsAtivos.map((post) => (
+          postsDaPagina.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:scale-[1.02] transition-transform border border-gray-200">
               {post.image && post.image.trim() !== "" && (
                 <Image 
@@ -134,6 +142,29 @@ export default function Home() {
           ))
         )}
       </div>
+      
+      {/* PAGINAÇÃO */}
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center gap-4 mt-16">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="bg-purple-600 text-white px-6 py-2 rounded-lg disabled:bg-gray-500 disabled:cursor-not-allowed hover:bg-purple-700 transition"
+          >
+            Anterior
+          </button>
+          <span className="text-white font-semibold">
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="bg-purple-600 text-white px-6 py-2 rounded-lg disabled:bg-gray-500 disabled:cursor-not-allowed hover:bg-purple-700 transition"
+          >
+            Próxima
+          </button>
+        </div>
+      )}
     </section>
   );
 }
