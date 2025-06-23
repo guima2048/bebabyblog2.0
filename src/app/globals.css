@@ -22,7 +22,7 @@
 body {
   background: #fff;
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .ProseMirror h2 {
@@ -111,8 +111,4 @@ body {
 }
 .prose a:hover {
   color: #a21caf;
-}
-
-.font-oswald {
-  font-family: 'Oswald', sans-serif;
 }

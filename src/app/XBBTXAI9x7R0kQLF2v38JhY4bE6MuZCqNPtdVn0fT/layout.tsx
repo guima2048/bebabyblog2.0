@@ -1,10 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { Inter } from "next/font/google"; // Removido
+import { Inter } from "next/font/google";
 import { ReactNode } from "react";
 import NotificacoesSino from "@/components/NotificacoesSino";
-// const inter = Inter({ subsets: ["latin"] }); // Removido
+const inter = Inter({ subsets: ["latin"] });
 
 function LogoutButton() {
   const router = useRouter();
@@ -24,7 +24,7 @@ function LogoutButton() {
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className={"bg-[#e9d8fd] min-h-screen flex flex-col"}> {/* A classe da fonte é herdada globalmente */}
+    <div className={inter.className + " bg-[#e9d8fd] min-h-screen flex flex-col"}>
       <div className="w-full flex justify-end items-center gap-4 p-4">
         <NotificacoesSino />
         <LogoutButton />
