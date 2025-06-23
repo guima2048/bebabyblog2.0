@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Oswald } from "next/font/google";
-const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] });
 
 export default function MenuHamburguer() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,7 +31,7 @@ export default function MenuHamburguer() {
             >
               &times;
             </button>
-            <nav className="flex flex-col gap-6 text-gray-200 text-lg" style={{fontFamily: oswald.style.fontFamily}}>
+            <nav className="font-oswald flex flex-col gap-6 text-gray-200 text-lg">
               <Link href="/" className="hover:text-white" onClick={() => setMenuOpen(false)}>Início</Link>
               <Link href="https://bebaby.app" className="hover:text-white" onClick={() => setMenuOpen(false)}>Entrar</Link>
               <Link href="https://bebaby.app" className="hover:text-white" onClick={() => setMenuOpen(false)}>Cadastre-se</Link>

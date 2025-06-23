@@ -1,13 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, Oswald } from "next/font/google";
+// import { Inter, Oswald } from "next/font/google"; // Removido
 import { siteSEO } from '@/config/seo';
 import FooterRedes from "@/components/FooterRedes";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
 import MenuHamburguer from "@/components/MenuHamburguer";
 
-const inter = Inter({ subsets: ["latin"] });
-const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] });
+// const inter = Inter({ subsets: ["latin"] }); // Removido
+// const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] }); // Removido
 
 export const metadata: Metadata = {
   title: "Blog para Sugar Babies e Sugar Daddies | Bebaby",
@@ -18,6 +18,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
+        
         <link rel="icon" type="image/png" href="/favicon.png" />
         {siteSEO.googleVerification && (
           <meta name="google-site-verification" content={siteSEO.googleVerification} />
@@ -42,11 +46,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
         <meta name="robots" content="noindex, nofollow" />
       </head>
-      <body className={inter.className + " bg-[#e9d8fd] min-h-screen flex flex-col"}>
+      <body className="bg-[#e9d8fd] min-h-screen flex flex-col"> {/* A classe da fonte inter é aplicada globalmente via CSS */}
         <header className="sticky top-0 z-50 bg-white shadow-sm p-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <MenuHamburguer />
-            <a href="/" className={oswald.className + " font-bold text-lg text-[#6b21a8]"}>Bebaby</a>
+            <a href="/" className="font-oswald font-bold text-lg text-[#6b21a8]">Bebaby</a> {/* Usando a classe CSS */}
           </div>
           <div className="flex items-center gap-4">
             <a href="https://bebaby.app" className="bg-[#210d41] text-white px-4 py-2 rounded-xl text-sm hover:bg-[#15082a] transition-colors">Cadastre-se</a>
