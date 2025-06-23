@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from 'react';
+
 export default function LeadForm() {
   return (
     <form className="mt-8 p-4 border rounded bg-gray-50 dark:bg-zinc-800">
