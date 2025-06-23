@@ -10,6 +10,7 @@ const nextConfig = {
   },
   output: 'standalone',
   experimental: {
+    optimizeFonts: false,
   },
   onDemandEntries: {
     maxInactiveAge: 60 * 60 * 1000,
