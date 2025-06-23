@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 
 interface Comment {
-  id: number;
-  author: string;
-  content: string;
-  createdAt: string;
+  nome: string;
+  texto: string;
+  data: string;
 }
 
 export default function CommentsList({ slug, newCommentTrigger }: { slug: string, newCommentTrigger: number }) {
@@ -13,7 +12,7 @@ export default function CommentsList({ slug, newCommentTrigger }: { slug: string
 
   useEffect(() => {
     setLoading(true);
-    fetch(`/api/comments?postSlug=${slug}`)
+    fetch(`/api/comments?slug=${slug}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -33,11 +32,11 @@ export default function CommentsList({ slug, newCommentTrigger }: { slug: string
     <div className="mt-12">
       <h3 className="text-xl font-bold text-[#6b21a8] mb-6">Comentários</h3>
       <ul className="space-y-6">
-        {comments.map((comment) => (
-          <li key={comment.id} className="border-l-4 border-[#c4b5fd] bg-white p-5 rounded-r-lg shadow-sm">
-            <div className="font-semibold text-[#6b21a8] text-lg">{comment.author}</div>
-            <p className="text-gray-800 mt-2">{comment.content}</p>
-            <div className="text-xs text-gray-400 mt-3">{new Date(comment.createdAt).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
+        {comments.map((comment, index) => (
+          <li key={index} className="border-l-4 border-[#c4b5fd] bg-white p-5 rounded-r-lg shadow-sm">
+            <div className="font-semibold text-[#6b21a8] text-lg">{comment.nome}</div>
+            <p className="text-gray-800 mt-2">{comment.texto}</p>
+            <div className="text-xs text-gray-400 mt-3">{new Date(comment.data).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}</div>
           </li>
         ))}
       </ul>
