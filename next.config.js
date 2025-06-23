@@ -5,7 +5,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['localhost', '177.153.20.125'],
+    domains: ['localhost', '177.153.20.125', "images.pexels.com"],
     unoptimized: true,
   },
   output: 'standalone',
@@ -18,6 +18,7 @@ const nextConfig = {
   // Otimizações de performance
   poweredByHeader: false,
   compress: true,
+  basePath: '/blog',
 };
 
 module.exports = nextConfig; 
