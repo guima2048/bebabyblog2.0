@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,16 @@ import TextAlign from '@tiptap/extension-text-align';
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
 import { lowlight } from 'lowlight/lib/common';
 
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim() // Remove espaços do início e do fim
+    .replace(/\s+/g, '-') // Substitui espaços por -
+    .replace(/[^\w\-]+/g, '') // Remove caracteres inválidos
+    .replace(/\-\-+/g, '-'); // Substitui múltiplos - por um único -
+}
+
 export default function NovoPost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -27,6 +37,8 @@ export default function NovoPost() {
   const [faqs, setFaqs] = useState<{ question: string; answer: string }[]>([]);
   const [faqQuestion, setFaqQuestion] = useState("");
   const [faqAnswer, setFaqAnswer] = useState("");
+  const [slugDuplicado, setSlugDuplicado] = useState(false);
+  const [slugSugestao, setSlugSugestao] = useState("");
 
   const editor = useEditor({
     extensions: [
@@ -41,6 +53,23 @@ export default function NovoPost() {
     ],
     content: '',
   });
+
+  useEffect(() => {
+    if (!slug) return;
+    const checkSlug = async () => {
+      const res = await fetch(`/api/posts?slug=${slug}`);
+      const data = await res.json();
+      if (data && data.slug === slug) {
+        setSlugDuplicado(true);
+        setSlugSugestao(`${slug}-2`);
+        toast.error(`Slug já existe! Sugestão: ${slug}-2`);
+      } else {
+        setSlugDuplicado(false);
+        setSlugSugestao("");
+      }
+    };
+    checkSlug();
+  }, [slug]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,11 +149,14 @@ export default function NovoPost() {
         <input
           type="text"
           value={slug}
-          onChange={(e) => setSlug(e.target.value)}
+          onChange={(e) => setSlug(slugify(e.target.value))}
           placeholder="Slug (ex: como-pedir-mimos)"
-          className="w-full border p-2 rounded"
+          className={`w-full border p-2 rounded ${slugDuplicado ? 'border-red-500' : ''}`}
           required
         />
+        {slugDuplicado && (
+          <div className="text-red-600 text-sm mb-2">Slug já existe! Sugestão: <span className="font-bold">{slugSugestao}</span></div>
+        )}
         <input
           type="text"
           value={title}
@@ -244,7 +276,8 @@ export default function NovoPost() {
         </select>
         <button
           type="submit"
-          className="bg-violet-600 text-white px-6 py-2 rounded"
+          className="bg-violet-600 hover:bg-violet-700 text-white px-6 py-2 rounded font-semibold shadow text-center"
+          disabled={slugDuplicado}
         >
           Salvar
         </button>

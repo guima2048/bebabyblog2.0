@@ -102,3 +102,13 @@ body {
 .prose blockquote p {
   margin: 0;
 }
+
+.prose a {
+  color: #6b21a8;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.prose a:hover {
+  color: #a21caf;
+}

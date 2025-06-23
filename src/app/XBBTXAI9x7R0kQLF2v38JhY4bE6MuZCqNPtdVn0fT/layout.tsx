@@ -12,7 +12,7 @@ function LogoutButton() {
   const handleLogout = async () => {
     setLoading(true);
     await fetch("/api/login", { method: "DELETE" });
-    router.push("/XBBT-XAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/login");
+    router.push("/XBBTXAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/login");
     setLoading(false);
   };
   return (

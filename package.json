@@ -3,13 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "postbuild": "next-sitemap",
-    "lint": "next lint",
+    "dev": "npx next dev",
+    "build": "npx next build",
+    "start": "npx next start",
+    "postbuild": "npx next-sitemap",
+    "lint": "npx next lint",
     "update-sitemap": "npx sitemap-generator-cli http://localhost:3000 --filepath ./public/sitemap.xml --stripQuerystring",
-    "export": "next export"
+    "export": "npx next export",
+    "clean": "rimraf .next && rimraf node_modules",
+    "reinstall": "npm run clean && npm install",
+    "deploy": "bash deploy.sh",
+    "type-check": "npx tsc --noEmit",
+    "format": "npx prettier --write .",
+    "analyze": "ANALYZE=true npx next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
@@ -40,6 +46,8 @@
     "remark-html": "^16.0.1",
     "sharp": "^0.34.2",
     "sonner": "^2.0.5",
+    "uuid": "^11.1.0",
+    "xlsx": "^0.18.5",
     "zod": "^3.25.64"
   },
   "devDependencies": {
@@ -50,10 +58,12 @@
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "postcss": "^8.5.6",
+    "rimraf": "^5.0.10",
     "sitemap-generator-cli": "^7.5.0",
     "tailwindcss": "^4.1.10",
     "typescript": "^5"

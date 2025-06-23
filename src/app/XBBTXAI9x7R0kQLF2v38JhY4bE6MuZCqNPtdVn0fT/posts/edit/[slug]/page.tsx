@@ -13,17 +13,26 @@ interface PostData {
   [key: string]: any;
 }
 
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
+}
+
 export default function EditPostPage() {
   const params = useParams() as { slug?: string | string[] };
   const router = useRouter();
-  const rawSlug = params && params.slug
-    ? typeof params.slug === 'string'
-      ? params.slug
-      : Array.isArray(params.slug)
-        ? params.slug[0]
-        : ''
+  
+  const initialSlug = params && params.slug
+    ? (Array.isArray(params.slug) ? params.slug[0] : params.slug)
     : '';
-  const slug = rawSlug.trim();
+
+  const [originalSlug, setOriginalSlug] = useState(slugify(initialSlug));
+  const [slug, setSlug] = useState(slugify(initialSlug));
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [content, setContent] = useState('');
@@ -40,8 +49,9 @@ export default function EditPostPage() {
   const [postData, setPostData] = useState<PostData | null>(null);
 
   useEffect(() => {
-    if (!slug) return;
-    fetch(`/api/posts?slug=${slug}`)
+    if (!originalSlug) return;
+    setLoading(true);
+    fetch(`/api/posts?slug=${originalSlug}`)
       .then((res) => res.json())
       .then((post) => {
         if (post) {
@@ -52,10 +62,12 @@ export default function EditPostPage() {
           setStatus(post.status || 'ativo');
           setFaqs(post.faqs || []);
           setPostData(post);
+          // Define o slug no estado após carregar o post
+          setSlug(post.slug || originalSlug);
         }
         setLoading(false);
       });
-  }, [slug]);
+  }, [originalSlug]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -94,8 +106,12 @@ export default function EditPostPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaved(false);
+    const finalSlug = slugify(slug); // Garante que o slug seja limpo ao salvar
+
     const updatedPost = {
-      slug: slug.trim(),
+      ...postData,
+      originalSlug: originalSlug, // Passa o slug original para encontrar o post
+      slug: finalSlug, // Passa o novo slug (limpo)
       title,
       description,
       content,
@@ -111,6 +127,10 @@ export default function EditPostPage() {
     if (res.ok) {
       toast.success("Post atualizado com sucesso!");
       setSaved(true);
+      if (originalSlug !== finalSlug) {
+        // Redireciona para o novo slug se ele mudou
+        router.push(`/XBBTXAI9x7R0kQLF2v38JhY4bE6MuZCqNPtdVn0fT/posts/edit/${finalSlug}`);
+      }
     } else {
       const data = await res.json();
       toast.error("Erro: " + data.error);
@@ -136,6 +156,14 @@ export default function EditPostPage() {
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Título"
           className="border p-2 rounded"
+          required
+        />
+        <input
+          type="text"
+          value={slug}
+          onChange={(e) => setSlug(slugify(e.target.value))}
+          placeholder="Slug"
+          className="border p-2 rounded bg-gray-50"
           required
         />
         <textarea

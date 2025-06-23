@@ -4,6 +4,7 @@ import { Inter, Oswald } from "next/font/google";
 import { siteSEO } from '@/config/seo';
 import FooterRedes from "@/components/FooterRedes";
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import MenuHamburguer from "@/components/MenuHamburguer";
 
 const inter = Inter({ subsets: ["latin"] });
 const oswald = Oswald({ subsets: ["latin"], weight: ["400","700"] });
@@ -43,8 +44,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={inter.className + " bg-[#e9d8fd] min-h-screen flex flex-col"}>
         <header className="sticky top-0 z-50 bg-white shadow-sm p-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className={oswald.className + " font-bold text-lg text-[#6b21a8]"}>Bebaby</span>
+          <div className="flex items-center gap-4">
+            <MenuHamburguer />
+            <a href="/" className={oswald.className + " font-bold text-lg text-[#6b21a8]"}>Bebaby</a>
           </div>
           <div className="flex items-center gap-4">
             <a href="https://bebaby.app" className="bg-[#210d41] text-white px-4 py-2 rounded-xl text-sm hover:bg-[#15082a] transition-colors">Cadastre-se</a>

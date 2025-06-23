@@ -4,6 +4,20 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ['localhost', '177.153.20.125'],
+    unoptimized: true,
+  },
+  output: 'standalone',
+  experimental: {
+  },
+  onDemandEntries: {
+    maxInactiveAge: 60 * 60 * 1000,
+    pagesBufferLength: 5,
+  },
+  // Otimizações de performance
+  poweredByHeader: false,
+  compress: true,
 };
 
 module.exports = nextConfig; 
